@@ -27,6 +27,10 @@ const {sequelize} = require('./models/index');
 }
 })();
 
+//*******************/
+//Set Middleware    /
+//******************/
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -39,6 +43,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+//Static route and the express.static method to serve static files 
+app.use('/static', express.static('public'));
 
 // catch 404 and forward to error handler
 app.use( (req, res, next) => {
