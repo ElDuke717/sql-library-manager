@@ -1,7 +1,11 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  h1 Server Error
+  p Sorry!  There was an unexpected error on the server.
 
+  h2 Technical Jargon for nerds:
+  h3= message
+  h3= error.status
+  pre #{error.stack}
+  img(src='/static/images/library_books_2.svg' alt='picture of books' class="bookpic")

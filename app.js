@@ -44,12 +44,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-//Static route and the express.static method to serve static files 
+//Static route and the express.static method to serve static files - may not be necessary since app.use(express.static(path.join(__dirname, 'public')));  is above
 app.use('/static', express.static('public'));
+
+//Error handlers
+app.use((req, res, next) => {
+  const err = new Error();
+  err.status = 404;
+  console.log('404 error handler called');
+  next(err);
+});
+
 
 // catch 404 and forward to error handler
 app.use( (req, res, next) => {
   next(createError(404));
+});
+
+//renders the page-not-found template
+app.use((err, req, res, next) => {
+  res.locals.error = err;
+  res.status(err.status);
+  res.render('page-not-found');
 });
 
 // error handler

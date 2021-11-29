@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+    h1 Books Available at Your Local Library
+    a(href='books/new', class="new-book") Create A New Book Entry   
+    br
+    table(class='book-table') 
+        thead
+            tr
+                th Title
+                th Author
+                th Genre
+                th Year
+        tbody
+            each book in books
+                tr
+                    td=book.title
+                    td=book.author
+                    td=book.genre 
+                    td=book.year
+    img(src='/static/images/library_books_2.svg' alt='picture of books' class="bookpic")

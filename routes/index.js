@@ -15,12 +15,18 @@ function asyncHandler(cb){
 }
 
 /* GET home page. */
-router.get('/', asyncHandler( async( req, res) => {
+router.get('/', (req, res, next) => {
+  res.redirect("/books")
+});
+
+/* GET Books Listing. */
+router.get('/books', asyncHandler( async( req, res) => {
   const books = await Book.findAll();
-   //res.render('index', { title: 'Express' });
-   res.json(books.map(book => book.toJSON()));
-   console.log(books.map(book => book.toJSON()));
+  res.render("books/index", { books, title: 'Books' });
+  console.log('index route called');
 }));
+
+
 
 
 module.exports = router;
