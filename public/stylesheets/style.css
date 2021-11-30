@@ -367,6 +367,14 @@ a {
   color: #00B7FF;
 }
 
+th {
+  font-size: 2em;
+}
+
+td {
+  font-size: 1.25em;
+}
+
 .bookpic {
   width: 500px;
   height: 500px;

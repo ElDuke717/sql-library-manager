@@ -33,7 +33,7 @@ const {sequelize} = require('./models/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -54,7 +54,6 @@ app.use((req, res, next) => {
   console.log('404 error handler called');
   next(err);
 });
-
 
 // catch 404 and forward to error handler
 app.use( (req, res, next) => {
