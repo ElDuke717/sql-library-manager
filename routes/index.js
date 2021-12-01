@@ -22,19 +22,21 @@ router.get('/', (req, res, next) => {
 /* GET Books listing. */
 router.get('/books', asyncHandler( async( req, res) => {
   const books = await Book.findAll();
-  res.render("books/books", { books, title: 'Here Are Some Interesting Books' });
+  res.render("books/books", { books, title: 'Books We Love' });
   console.log('index route called');
 }));
 
-/* Create a new book form. Not working for some reason*/
-router.get('/new', (req, res) => {
+/* Create a new book form */
+router.get('/books/new', (req, res) => {
   res.render("books/new-book",  {book: {}, title: "Enter A New Book"})
 });
 
 /* POST a new book*/
 router.post('/', asyncHandler(async(req, res)=> {
     const book = await Book.create(req.body);
+    console.log(req.body);
     res.redirect("/books/" + book.id);
+    
   // let book;
   // try {
   //   book = await Book.create(req.body);
