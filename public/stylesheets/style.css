@@ -391,8 +391,8 @@ td {
   font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+
 input {
-  margin-left: 20px;
   height: 20px;
   flex: 0 0 200px;
 }
@@ -403,7 +403,7 @@ label {
   flex-direction: row;
   justify-content: flex-start;
   text-align: right;
-  width: 200px;
+  width: 75px;
   line-height: 26px;
   margin-bottom: 10px;
 }
@@ -413,7 +413,12 @@ label {
   height: 500px;
 }
 
-.new-book, a.button {
+form > p {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.new-book, a.button, .edit-buttons {
   text-decoration: none;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   color: var(--button-text-color);
@@ -423,13 +428,22 @@ label {
   padding: 5px;
   cursor: pointer;
   height: 30px;
-  margin-left: 20px;
   transition: background-color 0.75s linear;
 }
 
-.new-book:hover, a.button:hover {
+.new-book:hover, a.button:hover, .edit-buttons:hover {
   background-color: var(--button-lighten-color);
-  
+}
+
+.edit-buttons {
+  margin: 10px;
+}
+
+.book-details {
+  color: var(--heading-color);
+  font-size: 25px;
+  font: 25px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px;
 }
 
 .book-table {

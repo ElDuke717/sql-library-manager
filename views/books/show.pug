@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1= book.title
+    //-   include by_line
+  h3.book-details= book.author
+  h3.book-details= book.genre
+  h3.book-details= book.year
+  a.edit-buttons(href="../") &larr; Return To Book List 
+   
+  a.edit-buttons(href="/books/" + book.id + "/edit") Edit Book 
+
+  a.edit-buttons(href="/books/" + book.id + "/delete") Delete Book

@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     h1=title 
-    a(href='/books/new', class="new-book") Add a book to the list  
+    a(href='/books/new', class="new-book") Add a book to the list
     br
     table(class='book-table') 
         thead
@@ -15,7 +15,7 @@ block content
             each book in books
                 tr
                     td
-                        a(href=`book_detail.html ` target="_blank") #{book.title}
+                        a(href=`/books/${book.id}`) #{book.title}
                     td=book.author
                     td=book.genre 
                     td=book.year
