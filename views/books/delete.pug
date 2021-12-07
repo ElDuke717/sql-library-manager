@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h1=title
+    p.form-text 
+        | Are you sure you want to delete 
+        em= book.title 
+        | ? 
+    form(action="/books/" + book.id +"/delete", method="post")
+        a.button(href="/books/" + book.id) Cancel
+        |
+        input(type="submit", value = "Yes, remove this book." class="new-book").edit-buttons

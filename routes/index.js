@@ -28,27 +28,24 @@ router.get('/books', asyncHandler( async( req, res) => {
   console.log('index route called');
 }));
 
-/* Create a new book form.  Renders the new book form */
+/* GET Create a new book form.  Renders the new book form */
 router.get('/books/new', (req, res) => {
-  res.render("books/new-book",  {book: {}, title: "Enter A New Book"});
+  res.render("books/new-book",  {book: {}, title: "Add a book to the list"});
 });
 
 /* POST a new book.  Adds a new book entry to the database.*/
 router.post('/books', asyncHandler(async(req, res)=> {
-  // const book = await Book.create(req.body);
-  // console.log('a post happened');
-  // res.redirect("/books/"+book.id);
-  // console.log(req.body);
   let book;
   try {
-    console.log('a post happened');   
-    console.log(req.body);
     book = await Book.create(req.body);
-    res.redirect("/books/"+book.id);
+    res.redirect("/books/" + book.id);
   } catch (error) {
     if (error.name === "SequelizeValidationError") {
+      console.log('sequelize-validation error!');
+      console.log(error.errors[0].message)
+      console.log(error.message);
       book = await Book.build(req.body);
-      res.render("books/new-book"), {book, errors: error.errors, title: "Enter A New Book"}
+      res.render("books/new-book"), {book, error: error.errors, title: "Add a book to the list"}
     } else {
       throw error;
     }
@@ -66,45 +63,56 @@ router.get("/books/:id/edit", asyncHandler(async (req, res) => {
 info on its own page.  I need to come back and fix the if/else block */
 router.get("/books/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render("books/show", { book, title: book.title }) 
-  // if (book) {
-  //   res.render("/books/show", {book, title:book.title});
-  // } else {
-  //   res.sendStatus(404);
-  // }
-  // res.render("books/show", { book, title: book.title }); 
+  if (book) {
+    res.render("books/show", {book, title:book.title});
+  } else {
+    res.sendStatus(404);
+  }
 }));
 
-/* POST Update an individual book.  Posts the info from the edit book form to the 
-database after it has been updated*/
+/* POST Update/Edit an individual book.  Posts the info from the edit book form to the 
+database after it has been updated.  Includes validation requirements for the title and the author and will 
+trigger an error if the model generates a sequelize validation error*/
 router.post("/books/:id/edit", asyncHandler(async (req, res) => {
-  console.log('router.post');
-  const book = await Book.findByPk(req.params.id);
-  await book.update(req.body);
-  console.log(req.body, "from line 82");
-  console.log('Book Edit called'); 
-  //The only way I was able to get this work right was through cancatenation
-  res.redirect("/books/" + book.id);
-  
-  // let book;
-  // try {
-  //   console.log('editing a book');   
-  //   if (book) {
-  //   await Book.create(req.body);
-  //   res.redirect("/books/"+book.id);
-  //   } else {
-  //     res.sendStatus(404);
-  //   }
-  // } catch (error) {
-  //   if (error.name === "SequelizeValidationError") {
-  //     book = await Book.build(req.body);
-  //     book.id = req.params.id; //make sure the book gets updated
-  //     res.render("books/new-book"), {book, errors: error.errors, title: "Enter A New Book"}
-  //   } else {
-  //     throw error;
-  //   }
-  // }
+  let book;
+  try {
+    book = await Book.findByPk(req.params.id);
+    if (book) {
+    await book.update(req.body);
+    res.redirect("/books/" + book.id);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    if (error.name === "SequelizeValidationError") {
+      book = await Book.build(req.body);
+      book.id = req.params.id; //make sure the book gets updated
+      res.render("books/new-book"), {book, errors: error.errors, title: "Enter A New Book"}
+    } else {
+      throw error;
+    }
+  }
 }));
 
+/*GET Delete a book form - renders the form to delete the book*/
+router.get("/books/:id/delete", asyncHandler(async (req, res)=> {
+  const book = await Book.findByPk(req.params.id);
+  if(book) {
+  res.render("books/delete", { book, title: "Remove this book from the list?"});
+  } else {
+    res.sendStatus(404);
+  }
+}));
+
+/*POST Delete a book - implements the delete via book.destroy() */
+router.post("/books/:id/delete", asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if(book) {
+  await book.destroy();
+  res.redirect("/books");
+  } else {
+    res.sendStatus(404);
+  }
+}));
 
 module.exports = router;

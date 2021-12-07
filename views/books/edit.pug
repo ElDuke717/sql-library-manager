@@ -3,6 +3,8 @@ extends ../layout
 block content
     h1=title
 
+    include errors
+
     form(action="/books/" + book.id +"/edit", method="post")
         p
             label(for='title') Title
@@ -18,5 +20,5 @@ block content
             input#year(name='year' type='text' value=book.year)
 
         input(type='submit' value='Save Changes' class='new-book')
-        p
-            a.button(href='../') Cancel 
+    p
+        a.button(href='../') Cancel 

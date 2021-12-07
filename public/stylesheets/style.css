@@ -354,10 +354,25 @@ CUSTOM CSS STYLES
 
 :root {
   --button-color: #ef7e6b;
-  --button-lighten-color: #f3a698;
+  --button-lighten-color: #ffbfb4;
   --body-color: #f5e9d4;
   --button-text-color: #365fa0;
   --heading-color: #325792;
+  --title-hover-color: #96b6e6;
+  --shadow-color: 39deg 25% 52%;
+  --shadow-elevation-medium:
+  -0.1px 0px 0.1px hsl(var(--shadow-color) / 0.34),
+  -0.4px 0.2px 0.5px -0.7px hsl(var(--shadow-color) / 0.37),
+  -1px 0.4px 1.3px -1.4px hsl(var(--shadow-color) / 0.4),
+  -2.4px 1px 3.1px -2.1px hsl(var(--shadow-color) / 0.43);
+  --shadow-elevation-high:
+    0.1px 0px 0.1px hsl(var(--shadow-color) / 0.38),
+    0.3px 0.2px 0.4px -0.4px hsl(var(--shadow-color) / 0.38),
+    0.7px 0.4px 0.9px -0.8px hsl(var(--shadow-color) / 0.38),
+    1.1px 0.8px 1.5px -1.2px hsl(var(--shadow-color) / 0.38),
+    1.9px 1.3px 2.6px -1.7px hsl(var(--shadow-color) / 0.38),
+    3.2px 2.1px 4.3px -2.1px hsl(var(--shadow-color) / 0.38),
+    5px 3.4px 6.8px -2.5px hsl(var(--shadow-color) / 0.38);
 }
 
 [hidden] {
@@ -372,6 +387,12 @@ body {
 
 a {
   color: var(--button-text-color);
+  text-decoration: none;
+  transition: color 0.25s linear;
+}
+
+a:hover {
+  color: var(--title-hover-color);
 }
 
 h1 {
@@ -428,6 +449,7 @@ form > p {
   padding: 5px;
   cursor: pointer;
   height: 30px;
+  box-shadow: var(--shadow-elevation-high);
   transition: background-color 0.75s linear;
 }
 
@@ -449,3 +471,19 @@ form > p {
 .book-table {
   margin: 50px;
 }
+
+.book-title {
+  text-decoration: none;
+}
+
+.form-text {
+  font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px 10px 30px 0px;
+}
+
+.errors {
+  color: rgb(235, 55, 23); }
+
+h2.errors {
+  color: rgb(235, 55, 23);
+  font-size: 3.4rem; }
