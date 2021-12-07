@@ -3,7 +3,12 @@ extends ../layout
 block content
     h1=title
 
-    include errors 
+        if(error) 
+            h2.errors Oops an error occurred!
+            ul.errors
+                each err in error
+                    li.err
+                        =err.message
 
     form(action="/books", method="post")
         p

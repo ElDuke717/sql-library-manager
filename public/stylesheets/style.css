@@ -430,8 +430,12 @@ label {
 }
 
 .bookpic {
-  width: 500px;
-  height: 500px;
+  width: 250px;
+  height: 250px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
 }
 
 form > p {
@@ -468,6 +472,10 @@ form > p {
   margin: 10px;
 }
 
+h3.book-details {
+  margin-bottom: 20px;
+}
+
 .book-table {
   margin: 50px;
 }
@@ -482,8 +490,19 @@ form > p {
 }
 
 .errors {
-  color: rgb(235, 55, 23); }
+  color: rgb(235, 55, 23); 
+}
+
+ul.errors {
+  margin-bottom: 50px;
+ }
 
 h2.errors {
   color: rgb(235, 55, 23);
-  font-size: 3.4rem; }
+  font-size: 3.4rem; 
+}
+
+  .err {
+    font: 25px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 10px;
+  }
