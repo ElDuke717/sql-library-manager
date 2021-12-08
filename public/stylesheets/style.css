@@ -438,6 +438,22 @@ label {
   /* width: 50%; */
 }
 
+.small-bookpic {
+  width: 125px;
+  height: 125px;
+  margin-left: 200px;
+}
+
+.bookstacks {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: auto;
+  margin-right: auto;
+  /* width: 50%; */
+}
+
 form > p {
   display: flex;
   justify-content: flex-start;
@@ -455,6 +471,8 @@ form > p {
   height: 30px;
   box-shadow: var(--shadow-elevation-high);
   transition: background-color 0.75s linear;
+  display: inline-flex;
+  align-items: center;
 }
 
 .new-book:hover, a.button:hover, .edit-buttons:hover {
@@ -482,6 +500,35 @@ h3.book-details {
 
 .book-title {
   text-decoration: none;
+}
+
+.book-list-func {
+  display: flex;
+  justify-content: flex-start;
+}
+.search-input, .search-submit {
+  height: 35px;
+  border-color: var(--button-text-color);
+  border-radius: 5px;
+}
+
+.search-input {
+  margin: 5px 0 5px 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  box-shadow: var(--shadow-elevation-high);
+  width: 300px;
+}
+
+.search-submit {
+  box-shadow: var(--shadow-elevation-high);
+  background-color: var(--button-color);
+  cursor: pointer;
+  transition: background-color 0.75s linear;
+  margin: 5px 0 5px 0px;
+}
+
+.search-submit:hover {
+  background-color: var(--button-lighten-color);
 }
 
 .form-text {

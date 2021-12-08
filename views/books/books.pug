@@ -2,8 +2,14 @@ extends ../layout
 
 block content
     h1=title 
-    a(href='/books/new', class="new-book") Add a book to the list
+    div.book-list-func 
+        a(href='/books/new', class="new-book") Add a book to the list
+        form(action='#' method='get')
+                input#search-input.search-input(type='search' placeholder='Search books')
+                input#search-submit.search-submit(type='submit' value='🔎')
+        img(src='/static/images/library_books_3.svg' alt='picture of books' class="small-bookpic")
     br
+    div.book-list
     table(class='book-table') 
         thead
             tr
@@ -13,10 +19,9 @@ block content
                 th Year
         tbody
             each book in books
-                tr
+                tr.book-item 
                     td.book-title 
                         a(href=`/books/${book.id}`) #{book.title}
-                    td=book.author
-                    td=book.genre 
-                    td=book.year
-    img(src='/static/images/library_books_2.svg' alt='picture of books' class="bookpic")
+                    td.book-author=book.author
+                    td.book-genre=book.genre 
+                    td.book-year=book.year
