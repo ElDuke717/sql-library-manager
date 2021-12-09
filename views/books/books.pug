@@ -10,6 +10,7 @@ block content
         img(src='/static/images/library_books_3.svg' alt='picture of books' class="small-bookpic")
     br
     div.book-list
+    h2#not-found
     table(class='book-table') 
         thead
             tr
@@ -25,3 +26,6 @@ block content
                     td.book-author=book.author
                     td.book-genre=book.genre 
                     td.book-year=book.year
+    .pagination
+        ul.link-list
+        //- Pagination buttons are dynamically added here.                

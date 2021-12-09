@@ -7,6 +7,6 @@ block content
         em= book.title 
         | ? 
     form(action="/books/" + book.id +"/delete", method="post")
-        a.button(href="/books/" + book.id) Cancel
+        a.edit-buttons(href="/books/" + book.id) Cancel
         |
-        input(type="submit", value = "Yes, remove this book." class="new-book").edit-buttons
+        input(type="submit", value = "Yes, remove this book." class="edit-buttons")
