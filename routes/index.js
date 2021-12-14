@@ -22,6 +22,7 @@ const booksPerPage = 15;
 //showBook replaces the async Book.findAll method in the home route to
 //enable search with pagination.  It is called by the GET books request and renders the books to the main page.
 async function showBook(searchTerm = '', page = 1) {
+  console.log('showBook called');
   /* findAndCountAll is used to replace findAll since it combines findAll and count. 
   This is useful when dealing with queries related to pagination where you want to retrieve 
   data with a limit and offset but also need to know the total number of records that match the query.
@@ -34,7 +35,7 @@ async function showBook(searchTerm = '', page = 1) {
         [Op.or]: {
           title: {
             //return a title like what's in the searchTerm - the term entered into the search input field.
-              [Op.like]: `%${searchTerm}%`
+            [Op.like]: `%${searchTerm}%`
           },
           author: {
             [Op.like]: `%${searchTerm}%`
@@ -64,16 +65,17 @@ async function showBook(searchTerm = '', page = 1) {
 
 /*GET Search books*/
 router.get('/books/search', asyncHandler(async(req, res) => {
-  let searchTerm = req.query.searchTerm && req.query.searchTerm.toLowerCase() || '';
-  console.log(page)
+  console.log('search route called');
   console.log(req.query);
+  console.log(req.query.searchTerm);
+  let searchTerm = req.query.searchTerm.toLowerCase() || '';
   const page = req.query.page || 1;
   console.log(`in /books/search, looking for "${searchTerm}", on page ${page}`);
   const { books, bookPages } = await showBook(searchTerm, page)
   console.log(books.map(book => book.toJSON()));
   console.log(books.length)
   console.log(bookPages); 
-  res.render('/books/books', { books, bookPages, page, title: 'Search results'})
+  res.render('books/books', { books, bookPages, page, searchTerm, title: 'Search results'})
 }))
 
 /* GET redirect to home page */
@@ -83,12 +85,6 @@ router.get('/', (req, res, next) => {
 
 /* GET Books listing homepage - shows all books */
 router.get('/books', asyncHandler( async( req, res) => {
-  // const books = await Book.findAll({
-  //     order: [
-  //       ["title", "ASC"]
-  //     ],
-  //   });
-  //console.log(req.query.page);
   //if no page is specified, then the default is 1.
   const page = req.query.page || 1;
   console.log('requested page: ', page);

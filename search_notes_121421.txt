@@ -52,6 +52,7 @@ http://localhost:3001/books?page=1
 
 	as determined by the pagination section of the index page:      a.pagination-buttons(href=`/books?page=${++ i}`) #{i}
 
+
 and when 1988 is put into the search:
 
 http://localhost:3001/books/search?searchTerm=1988
