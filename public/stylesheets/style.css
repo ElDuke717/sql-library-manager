@@ -359,6 +359,9 @@ CUSTOM CSS STYLES
   --button-text-color: #365fa0;
   --heading-color: #325792;
   --title-hover-color: #96b6e6;
+  --pagination-color:#98d4e1;
+  --pagination-header-color:#a09484;
+  --pagination-hover-color: #c3d9fa;
   --shadow-color: 39deg 25% 52%;
   --shadow-elevation-medium:
   -0.1px 0px 0.1px hsl(var(--shadow-color) / 0.34),
@@ -386,13 +389,13 @@ body {
 }
 
 a {
-  color: var(--button-text-color);
+  /* color: var(--button-text-color);
   text-decoration: none;
-  transition: color 0.25s linear;
+  transition: color 0.25s linear; */
 }
 
 a:hover {
-  color: var(--title-hover-color);
+  /* color: var(--title-hover-color); */
 }
 
 h1 {
@@ -500,6 +503,12 @@ h3.book-details {
 
 .book-title {
   text-decoration: none;
+  color: var(--button-text-color);
+  text-decoration: none;
+  transition: color 0.25s linear;
+}
+.book-title:hover {
+  color: var(--title-hover-color);
 }
 
 .book-list-func {
@@ -577,4 +586,36 @@ h2.errors {
   color: var(--heading-color);
   background-color: var(--button-color);
   cursor: pointer;
+}
+
+.pagination  {
+  display: flex;
+  justify-content: space-around;
+}
+
+.pagination-header {
+  color: var(--pagination-header-color);
+  font: 20px;
+  font-weight:500;
+  margin: 50px 0 40px 70px; 
+  /* text-decoration: overline; */
+  /* border: 1px solid var(--pagination-header-color); */
+}
+
+.pagination-buttons {
+  text-decoration: none;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: var(--button-text-color);
+  border: 2px solid;
+  border-radius: 5px;
+  background-color: var(--pagination-color);
+  padding: 5px;
+  cursor: pointer;
+  height: 17px;
+  box-shadow: var(--shadow-elevation-high);
+  transition: background-color 0.75s linear;
+}
+
+.pagination-buttons:hover {
+  background-color: var(--pagination-hover-color);
 }

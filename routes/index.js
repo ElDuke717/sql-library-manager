@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
+const Sequelize = require('../models').Sequelize;
+//Op is imported so that we can use Sequelize's operators
+const Op = Sequelize.Op
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb){
@@ -14,18 +17,86 @@ function asyncHandler(cb){
   }
 }
 
-/* GET home page */
+//Determines the books per page to render
+const booksPerPage = 15;
+//showBook replaces the async Book.findAll method in the home route to
+//enable search with pagination.  It is called by the GET books request and renders the books to the main page.
+async function showBook(searchTerm = '', page = 1) {
+  /* findAndCountAll is used to replace findAll since it combines findAll and count. 
+  This is useful when dealing with queries related to pagination where you want to retrieve 
+  data with a limit and offset but also need to know the total number of records that match the query.
+  -rows is the specific Book entries on the page. 
+ - count is the total number of entries in the database 
+ */
+  let { rows, count } = await Book.findAndCountAll({
+      where: {
+        //Op.or allows the searchTerm to be used for any details associated with a book.
+        [Op.or]: {
+          title: {
+            //return a title like what's in the searchTerm - the term entered into the search input field.
+              [Op.like]: `%${searchTerm}%`
+          },
+          author: {
+            [Op.like]: `%${searchTerm}%`
+          },
+            genre: {
+            [Op.like]: `%${searchTerm}%`
+          },
+          year: {
+            [Op.like]: `%${searchTerm}%`
+          }
+        }
+      },
+      //order is an option that organizes the returned Books by title in ascending order
+      order: [
+        ["title", "ASC"]
+      ],
+      //limit specifies the number Books to be rendered to the books page - in this case, booksPerPage
+      limit: booksPerPage,
+      //offset specifies the number the jump or section of Books to be returned from the database
+      offset: (page-1) * booksPerPage
+  })
+  //determines the number of pages that will be used in pagination, divides the count by the specifed number of books.
+  const bookPages = Math.ceil(count / booksPerPage)
+  //showBooks returns an object with bookPages (how many pages to render) and books is the books provided by rows.
+  return { bookPages, books: rows }
+}
+
+/*GET Search books*/
+router.get('/books/search', asyncHandler(async(req, res) => {
+  let searchTerm = req.query.searchTerm && req.query.searchTerm.toLowerCase() || '';
+  console.log(page)
+  console.log(req.query);
+  const page = req.query.page || 1;
+  console.log(`in /books/search, looking for "${searchTerm}", on page ${page}`);
+  const { books, bookPages } = await showBook(searchTerm, page)
+  console.log(books.map(book => book.toJSON()));
+  console.log(books.length)
+  console.log(bookPages); 
+  res.render('/books/books', { books, bookPages, page, title: 'Search results'})
+}))
+
+/* GET redirect to home page */
 router.get('/', (req, res, next) => {
   res.redirect("/books")
 });
 
-/* GET Books listing */
+/* GET Books listing homepage - shows all books */
 router.get('/books', asyncHandler( async( req, res) => {
-  const books = await Book.findAll(
-    { order: [["title", "ASC"]]}
-    );
-  res.render("books/books", { books, title: 'Books We Love 📖'  });
-  console.log('index route called');
+  // const books = await Book.findAll({
+  //     order: [
+  //       ["title", "ASC"]
+  //     ],
+  //   });
+  //console.log(req.query.page);
+  //if no page is specified, then the default is 1.
+  const page = req.query.page || 1;
+  console.log('requested page: ', page);
+  //books and bookPages are returned from showBook
+  const { books, bookPages } = await showBook('', page) 
+  console.log(books.map(book => book.toJSON()));
+  console.log(bookPages);
+  res.render("books/books", { books, bookPages, page, title: 'Books We Love 📖'  });
 }));
 
 /* GET Create a new book form.  Renders the new book form */

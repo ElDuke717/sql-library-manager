@@ -1,12 +1,9 @@
-'use strict'
+ 'use strict'
 
 // ------------------------------------------
 //  GLOBAL VARIABLES
 // ------------------------------------------
 
-// const express = require('express');
-// const router = express.Router();
-// const Book = require('../models').Book
 const searchButton = document.getElementById('search-submit');
 const bookTable = document.querySelector('.book-table');
 const bookItem = document.querySelectorAll('.book-item');
@@ -16,20 +13,17 @@ const notFound = document.getElementById('not-found');
 const itemsPerPage = 15;
 const fullSearchArray = [];
 
-// console.log(bookItem);
-// console.log(Array.from(bookItem)); 
+console.log('JS file is working!');
 
-searchButton.addEventListener('click', () => {
-    searchBooks();
-    // bookTable.innerHTML;
-    fullSearchArray.length = 0;
-    console.log(fullSearchArray.length)
-});
+//searchButton is an event listener that calls searchBooks
+// searchButton.addEventListener('click', () => {
+//     searchBooks();
+//     fullSearchArray.length = 0;
+// });
 
+//searchBooks searches the results on the page and hides the those that don't match the search.
 function searchBooks() {
     const searchInput = document.querySelector('.search-input').value.toLowerCase();
-    console.log(searchInput);
-    
     for (let i = 0; i < bookItem.length; i++) {
         if(bookItem[i].innerText.toLowerCase().includes(searchInput)) {
             bookItem[i].style.display='';
@@ -38,9 +32,6 @@ function searchBooks() {
             fullSearchArray.push(bookItem[i]);
         }
     }
-   
-    console.log(fullSearchArray.length);
-   
     if(fullSearchArray.length >= bookItem.length) {
         notFound.innerText = `The book you're looking for cannot be found`;
     } else if (fullSearchArray.length < bookItem.length){
@@ -48,11 +39,19 @@ function searchBooks() {
     }
 }
 
-function showPage(list, page) {
+
+
+//==========================================================================
+/* DOM manipulation methods for adding pagination */
+
+//Experimental pagination based on data on the page - need to figure out how to get books data so that it can be 
+// manipulated and added to the DOM.
+
+function showPage(bookArray, page) {
     const startIndex = (page * itemsPerPage) - itemsPerPage;
     const endIndex = page * itemsPerPage;
     tableData.innerText="";
-    for (let i = 0; i<list.length; i++) {
+    for (let i = 0; i<bookArray.length; i++) {
         if ( i>=startIndex && i < endIndex) {
             const bookItem = 
             `<tr class="book-item"> 
@@ -68,11 +67,11 @@ function showPage(list, page) {
     }
 }
 
-function addPagination(list) {
+function addPagination(bookArray) {
     console.log(bookItem.length)
     const numOfPages = Math.ceil(bookItem.length/itemsPerPage);
     linkList.innerHTML="";
-    console.log(numOfPages)
+    //console.log(numOfPages)
     for (let i = 1; i<= numOfPages; i++) {
         const button = `<li> <button type = "button">${[i]}</button> </li>`;
         linkList.insertAdjacentHTML("beforeend", button);
@@ -82,12 +81,12 @@ function addPagination(list) {
         if(e.target.tagName ==="BUTTON") {
             document.querySelector('.active').className="";
             e.target.className="active";
-            showPage(list, e.target.textContent);
+            showPage(bookArray, e.target.textContent);
         }
     });
 }
 
 /*Call Functions */
 
-// showPage(book, 1);
-// addPagination(book);
+// showPage(bookArray, 1);
+//addPagination();

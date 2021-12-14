@@ -1,0 +1,57 @@
+Problems:
+
+1. Search used to work with showBooks function - would return the matches to the query in 'books' and the number of pages for the result.  Now we just get a 500 error and no results in the console.
+2. The index page has never rendered the results of the search with the pagination.
+
+
+Index, main route, URL
+http://localhost:3001/books
+
+Refresh the page, console:
+requested page:  1
+index route called
+Executing (default): SELECT count(*) AS `count` FROM `Books` AS `Book` WHERE (`Book`.`title` LIKE '%%' OR `Book`.`author` LIKE '%%' OR `Book`.`genre` LIKE '%%' OR `Book`.`year` LIKE '%%');
+Executing (default): SELECT `id`, `title`, `author`, `genre`, `year`, `createdAt`, `updatedAt` FROM `Books` AS `Book` WHERE (`Book`.`title` LIKE '%%' OR `Book`.`author` LIKE '%%' OR `Book`.`genre` LIKE '%%' OR `Book`.`year` LIKE '%%') ORDER BY `Book`.`title` ASC LIMIT 0, 10;
+10  	(console.log(books.length)), in router.get /books
+6	(console.log(bookPages)), in router.get /books
+GET /books 304 18.628 ms - -
+GET /stylesheets/style.css 304 0.587 ms - -
+GET /static/javascripts/script.js 304 0.671 ms - -
+GET /static/images/library_books_3.svg 304 1.137 ms - -
+GET /static/images/library_books.svg 304 1.093 ms - -
+GET /static/images/library_books_2.svg 304 1.106 ms - -
+
+
+
+No search term, in the console:
+GET /books/search?searchTerm= 500 5.363 ms - 1930
+GET /stylesheets/style.css 304 0.366 ms - -
+GET /static/images/library_books_2.svg 304 1.079 ms - -
+GET /static/images/library_books.svg 304 1.575 ms - -
+GET /static/images/library_books_3.svg 304 0.964 ms - -
+
+In the URL:
+http://localhost:3001/books/search?searchTerm=
+
+
+Search term 'pickle', in the console:
+GET /books/search?searchTerm=pickle 500 5.641 ms - 1930
+GET /stylesheets/style.css 304 0.417 ms - -
+GET /static/images/library_books_2.svg 304 1.542 ms - -
+GET /static/images/library_books.svg 304 1.487 ms - -
+GET /static/images/library_books_3.svg 304 1.594 ms - -
+
+in the URL:
+http://localhost:3001/books/search?searchTerm=pickle
+
+
+
+Now that pagination works - here's what the URL looks like when the 1st page is selected:
+
+http://localhost:3001/books?page=1  
+
+	as determined by the pagination section of the index page:      a.pagination-buttons(href=`/books?page=${++ i}`) #{i}
+
+and when 1988 is put into the search:
+
+http://localhost:3001/books/search?searchTerm=1988
