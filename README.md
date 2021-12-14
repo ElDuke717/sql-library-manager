@@ -1,5 +1,5 @@
 # SQL Library Manager
-![book image](public\images\library_books_3.png)
+![book image](public/images/library_books_3.png)
 
 ## Note: App is running on PORT 3001
 
