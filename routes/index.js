@@ -1,3 +1,4 @@
+//Express and Sequelize modules
 const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
@@ -19,8 +20,10 @@ function asyncHandler(cb){
 
 //Determines the books per page to render
 const booksPerPage = 15;
-//showBook replaces the async Book.findAll method in the home route to
-//enable search with pagination.  It is called by the GET books request and renders the books to the main page.
+/*showBook replaces the async Book.findAll method in the home route to enable search with pagination.  
+It is called by the GET books request and renders the books to the main page. 
+showBook is called by the search and the main index/books route and has two default settings, blank searchTerm 
+and start on page 1*/
 async function showBook(searchTerm = '', page = 1) {
   console.log('showBook called');
   /* findAndCountAll is used to replace findAll since it combines findAll and count. 
@@ -66,16 +69,14 @@ async function showBook(searchTerm = '', page = 1) {
 /*GET Search books*/
 router.get('/books/search', asyncHandler(async(req, res) => {
   console.log('search route called');
-  console.log(req.query);
+  //req.query.searchTerm is the searchTerm attached ot the request object
   console.log(req.query.searchTerm);
   let searchTerm = req.query.searchTerm.toLowerCase() || '';
   const page = req.query.page || 1;
-  console.log(`in /books/search, looking for "${searchTerm}", on page ${page}`);
+  console.log(`This is the search route, looking for "${searchTerm}", on page ${page}`);
   const { books, bookPages } = await showBook(searchTerm, page)
-  console.log(books.map(book => book.toJSON()));
-  console.log(books.length)
-  console.log(bookPages); 
-  res.render('books/books', { books, bookPages, page, searchTerm, title: 'Search results'})
+  console.log(books.map(book => book.toJSON().title.slice(0,10))); //returns a list of the titles, as a check. .slice() method added to shorten
+  res.render('books/books', { books, bookPages, page, searchTerm, title: `Search results for "${searchTerm}":`})
 }))
 
 /* GET redirect to home page */
@@ -90,9 +91,9 @@ router.get('/books', asyncHandler( async( req, res) => {
   console.log('requested page: ', page);
   //books and bookPages are returned from showBook
   const { books, bookPages } = await showBook('', page) 
-  console.log(books.map(book => book.toJSON()));
-  console.log(bookPages);
-  res.render("books/books", { books, bookPages, page, title: 'Books We Love 📖'  });
+  console.log(books.map(book => book.toJSON().title.slice(0,10))); //returns a list of the titles, as a check. .slice() method added to shorten
+  //renders the books view in the books folder, pulling in books and bookPages from showBook.
+  res.render("books/books", { books, bookPages, page, title: 'The Booklist 📖'  });
 }));
 
 /* GET Create a new book form.  Renders the new book form */
@@ -124,9 +125,9 @@ router.get("/books/:id/edit", asyncHandler(async (req, res) => {
 }));
 
 /* GET individual book. This allows the user to view each individual book's 
-info on its own page.  I need to come back and fix the if/else block */
+info on its own page.  */
 router.get("/books/:id", asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
+  const book = await Book.findByPk(req.params.id); //req.params.id contains the book's unique id number
   if (book) {
     res.render("books/show", {book, title:book.title});
   } else {

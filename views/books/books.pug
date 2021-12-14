@@ -3,38 +3,45 @@ extends ../layout
 block content
     h1=title 
     div.book-list-func 
+        //- add new book button
         a(href='/books/new', class="new-book") Add a book to the list
+        //- search input form and submit button
         form(action='/books/search' method='get')
                 input#search-input.search-input(type='search' name='searchTerm' placeholder='Search books')
                 input#search-submit.search-submit(type='submit' value='🔎')
         img(src='/static/images/library_books_3.svg' alt='picture of books' class="small-bookpic")
     br
     div.book-list
+    //- logic for the book results - if no books are found, then the phrase is returned, otherwise, the table is shown
     if books.length === 0
-        h2#not-found
+        h2.no-results  Your search did not return any results.
     if books.length > 0
-    table(class='book-table') 
-        thead
-            tr
-                th Title
-                th Author
-                th Genre
-                th Year
-        tbody.table-data
-            each book in books
-                tr.book-item 
-                    td.book-title 
-                        a.book-title(href=`/books/${book.id}`) #{book.title}
-                    td.book-author=book.author
-                    td.book-genre=book.genre 
-                    td.book-year=book.year
-    h3.pagination-header Click buttons below to see more results 
+        //-Table that populates based on the returned rows of data.
+        table(class='book-table') 
+            thead
+                tr
+                    th Title
+                    th Author
+                    th Genre
+                    th Year
+            tbody.table-data
+                each book in books
+                    tr.book-item 
+                        td.book-title 
+                            a.book-title(href=`/books/${book.id}`) #{book.title}
+                        td.book-author=book.author
+                        td.book-genre=book.genre 
+                        td.book-year=book.year
+        h3.pagination-header Click buttons below to see more results 
+    //- The section below adds pagination buttons dynamically, based on the number of books returned.
     .pagination 
-        - let i = 0;
-            while i < bookPages
+        //- loop that determines how many pagination buttons should be rendered based on results of the search.
+        - let i = 0; 
+            while i < bookPages 
+                //- if there's a searchTerm, then an URL is built in the button that includes the page number.
                 if(searchTerm)
-                    a.pagination-buttons(href=`/books/search?q=${searchTerm}&page=${++ i}`) #{ i }
+                    a.pagination-buttons(href=`/books/search?searchTerm=${searchTerm}&page=${++i}`) #{ i }
+                //-if there's no searchTerm, then pagination buttons are returned for all the books in the database.
                 else
-                    a.pagination-buttons(href=`/books?page=${++ i}`) #{i}
-
+                    a.pagination-buttons(href=`/books?page=${++i}`) #{i}
     script(src='static/javascripts/script.js')                

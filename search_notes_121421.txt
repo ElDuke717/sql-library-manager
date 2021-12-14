@@ -56,3 +56,22 @@ http://localhost:3001/books?page=1
 and when 1988 is put into the search:
 
 http://localhost:3001/books/search?searchTerm=1988
+
+
+What's working right?
+-showBook is working when there is no searchTerm
+-pagination buttons are working when there is no searchTerm
+-page is rendering
+
+
+What fixed it was removing the "req.query.searchTerm &&" from the let searchTerm in the Search books route.
+
+
+Pagination button URL when the searchTerm "marjin" is used:
+<a class="pagination-buttons" href="/books/search?q=marjin&amp;page=1">1</a>
+	it looks like q could be wrong here
+
+Pagination button URL when no searchTerm is added and just all books are shown:
+<a class="pagination-buttons" href="/books?page=1">1</a>
+
+	Changing "q" to "searchTerm" fixed the pagination problem!

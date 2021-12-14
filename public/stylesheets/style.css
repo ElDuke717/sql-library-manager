@@ -619,3 +619,8 @@ h2.errors {
 .pagination-buttons:hover {
   background-color: var(--pagination-hover-color);
 }
+
+.no-results {
+  font-size: 50px;
+  color: #b69762
+}
