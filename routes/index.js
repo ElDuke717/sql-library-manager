@@ -131,7 +131,8 @@ router.get("/books/:id", asyncHandler(async (req, res) => {
   if (book) {
     res.render("books/show", {book, title:book.title});
   } else {
-    res.sendStatus(404);
+    //res.sendStatus(404);
+    res.render('page-not-found');
   }
 }));
 

@@ -15,6 +15,7 @@ block content
     //- logic for the book results - if no books are found, then the phrase is returned, otherwise, the table is shown
     if books.length === 0
         h2.no-results  Your search did not return any results.
+        a.button(href='../') Back to the list 
     if books.length > 0
         //-Table that populates based on the returned rows of data.
         table(class='book-table') 

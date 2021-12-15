@@ -48,28 +48,30 @@ app.use('/users', usersRouter);
 app.use('/static', express.static('public'));
 
 //Error handlers
-app.use((req, res, next) => {
-  // const err = new Error('The page you\re looking for can\'t be found');
-  // err.status = 404;
-  console.log('404 error handler called');
-  res.status(404).render('page-not-found');
-  // next(err);
-});
+// app.use((req, res, next) => {
+//   // const err = new Error('The page you\re looking for can\'t be found');
+//   // err.status = 404;
+//   console.log('404 error handler called');
+//   res.status(404).render('page-not-found');
+//   // next(err);
+// });
 
 //404 handler
 app.use((req, res, next) => {
   const err = new Error('The page you\'re looking for can\'t be found');
   err.status = 404;
   console.log('404 error handler called');
+  console.log(err);
+  console.log(err.status);
   next(err);
 });
 
-//renders the page-not-found template
-app.use((err, req, res, next) => {
-  res.locals.error = err;
-  res.status(err.status);
-  res.render('page-not-found');
-});
+// //renders the page-not-found template
+// app.use((err, req, res, next) => {
+//   res.locals.error = err;
+//   res.status(err.status);
+//   res.render('page-not-found');
+// });
 
 app.use((err, req, res, next) => {
   if (err) {
@@ -92,5 +94,6 @@ app.use((err, req, res, next) => {
   //res.send("Oops, something went wrong.")
   console.log('There was an error - check out the stack trace for more info.')
 });
+
 
 module.exports = app;
