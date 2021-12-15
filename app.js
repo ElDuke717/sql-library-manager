@@ -49,15 +49,19 @@ app.use('/static', express.static('public'));
 
 //Error handlers
 app.use((req, res, next) => {
-  const err = new Error();
+  // const err = new Error('The page you\re looking for can\'t be found');
+  // err.status = 404;
+  console.log('404 error handler called');
+  res.status(404).render('page-not-found');
+  // next(err);
+});
+
+//404 handler
+app.use((req, res, next) => {
+  const err = new Error('The page you\'re looking for can\'t be found');
   err.status = 404;
   console.log('404 error handler called');
   next(err);
-});
-
-// catch 404 and forward to error handler
-app.use( (req, res, next) => {
-  next(createError(404));
 });
 
 //renders the page-not-found template
@@ -67,15 +71,26 @@ app.use((err, req, res, next) => {
   res.render('page-not-found');
 });
 
-// error handler
-app.use( (err, req, res, next) => { 
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use((err, req, res, next) => {
+  if (err) {
+  console.log('Global error handler called', err);
+  }
+  if (err.status === 404) {
+    res.status(404).render('page-not-found', { err });
+  } else {
+    err.message = err.message || `Oops!  It looks like something went wrong on the server.`;
+    res.status(err.status || 500).render('error', { err });
+  }
+});
 
-  // render the error page
-  res.status(err.status || 500);
+//Catch-all error handler
+app.use((err, req, res, next) => {
+  res.locals.error = err;
+  res.status(err.status);
+  res.status(500);
   res.render('error');
+  //res.send("Oops, something went wrong.")
+  console.log('There was an error - check out the stack trace for more info.')
 });
 
 module.exports = app;
