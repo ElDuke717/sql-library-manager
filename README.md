@@ -4,8 +4,9 @@
 ## Note: App is running on PORT 3001
 
 ### This is Project 8 for the Treehouse FSJS Techdegree
+#### Submitting for **Exceeds Expectations** grade
 
-### You may start this project by typing _nodemon start_  or _npm start_ in the command line after running _npm install_ from the project's main folder 
+### You may start this project by typing _nodemon start_  or _npm start_ in the command line after running _npm install_ from the project's main folder. 
 
 ## Project Notes:
 
@@ -20,7 +21,7 @@
 
 3. The styling has been changed to make the app more appealing.  The static CSS file has `normalize` add to make the page compatible across browser and the custom CSS is found below the `normalize` rules (on line 350).  
 
-4. Search functionality and pagination have been added for extra credit.  Both the search and pagination and derived from Sequelize's functionality through using `findAndCountAll()` in place of `findAll()` for the `showBook` function that pulls the data.
+4. **Exceeds Expectations** criteria: Search functionality and pagination have been added for extra credit.  Both the search and pagination and derived from Sequelize's functionality through using `findAndCountAll()` in place of `findAll()` for the `showBook` function that pulls the data.
 
 5. The app has been tested in Chrome, Firefox (primarlly used for development) and Edge browsers.
 
