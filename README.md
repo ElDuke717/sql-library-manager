@@ -5,15 +5,15 @@
 
 ### This is Project 8 for the Treehouse FSJS Techdegree
 
-### You may start this project by typing _nodemon start_ in the command line after running _npm install_ from the project's main folder 
+### You may start this project by typing _nodemon start_  or _npm start_ in the command line after running _npm install_ from the project's main folder 
 
 ## Project Notes:
 
-1. You may start this project by typing _nodemon start_ in the command line after running _npm install_ from the project's main folder.  It is running on **port 3001** 
+1. You may start this project by typing _nodemon start_  or _npm start_ in the command line after running _npm install_ from the project's main folder .  It is running on **port 3001** 
 
 2. Extensive notes have been added throughout the code.  They have been added so that the code is easier to follow (and I can figure out what's going on when I return to this project in the future).   
     - The `library.db` file contains 90+ rows/entries.
-    - There are several log statments in the console while the app is running.
+    - There are several log statments in the console while the app is running to help the developer see what's going on in the routes.
     - a JavaScript file `public\javascripts\script.js` has been added to the project, but is not currently doing anything.
     -  All routes are in `index,js` found in the `routes` folder.  All views are in the `views` folder.
     - All routes are in `index,js` found in the `routes` folder.  All views are in the `views` folder.
